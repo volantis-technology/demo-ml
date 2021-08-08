@@ -1,0 +1,4 @@
+sklearn
+numpy
+Flask
+gunicorn

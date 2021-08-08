@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: volantis-demo-ml
+    labels:
+      app: volantis-demo-ml
+spec:
+    ports:
+    - port: 8000
+      targetPort: 8000
+      name: http
+    selector:
+      app: volantis-demo-ml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: volantis-demo-ml
+    labels:
+      app: volantis-demo-ml
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: volantis-demo-ml
+    template:
+        metadata:
+            labels:
+                 app: volantis-demo-ml
+        spec:
+            containers:
+            - name: volantis-demo-ml
+              image: volantis/demo-ml:latest
+              resources:
+                requests:
+                  cpu: "500"
+                  memory: "512Mi"
+              ports:
+              - containerPort: 8000
+                name: http
